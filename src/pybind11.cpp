@@ -2,6 +2,7 @@
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 
+#include "cache.h"
 #include "player.h"
 #include "action.h"
 #include "env.h"
@@ -12,6 +13,33 @@ py::array_t<T> to_numpy(const std::array<T, Width * Height> &data) {
 }
 
 PYBIND11_MODULE(libcpp, m_cpp) {
+    // Cache
+    auto cls_cache = py::class_<Cache>(m_cpp, "Cache");
+    cls_cache.def(py::init<size_t>(), py::arg("capacity"), "Constructor with cache capacity")
+        .def("get", 
+             [](Cache &self, uint64_t key) -> py::object {
+                 double value;
+                 if (self.get(key, value)) {
+                     return py::float_(value);
+                 } else {
+                     return py::none();
+                 }
+             },
+             py::arg("key"),
+             "Retrieve value from cache. Returns None if key not found.")
+        .def("put",
+             &Cache::put,
+             py::arg("key"),
+             py::arg("value"),
+             "Insert or update a key-value pair in the cache.")
+        .def("size",&Cache::size,"Get the number of items in the cache.")
+        .def("to_dict",
+             &Cache::export_cache,
+             "Export the entire cache as a dictionary.")
+        .def("from_dict",
+             &Cache::import_cache,
+             py::arg("data"),
+             "Import cache data from a dictionary.");
     // Player
     auto cls_player = py::class_<Player>(m_cpp, "Player");
     cls_player.def(py::init<int>())
@@ -57,7 +85,9 @@ PYBIND11_MODULE(libcpp, m_cpp) {
         .def("legal_actions", &Env::legalActions, "Get the list of legal actions")
         .def_property_readonly("player", &Env::getPlayer, "Current player")
         .def_property_readonly("history_size", &Env::historySize)
-        .def_property_readonly("last_action", &Env::getLastAction);
+        .def_property_readonly("last_action", &Env::getLastAction)
+        .def_property_readonly("w_board", &Env::getWBoard)
+        .def_property_readonly("b_board", &Env::getBBoard);
 
     // Bitboard
     auto m_bb = m_cpp.def_submodule("bitboard", "Bitboard submodule");

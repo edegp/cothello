@@ -156,6 +156,14 @@ public:
         return action_history.back();
     }
 
+    uint64_t getWBoard() const {
+        return w_board;
+    }
+
+    uint64_t getBBoard() const {
+        return b_board;
+    }
+
 private:
     Player player;
     uint64_t b_board;
