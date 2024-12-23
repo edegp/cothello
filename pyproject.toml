@@ -9,7 +9,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "othello"
-version = "2.3.2"
+version = "2.3.3"
 description = "C++ othello environment using bitboard."
 authors = ["Tatsuya Yatagawa <tatsy.mail@gmail.com>"]
 readme = "README.md"
