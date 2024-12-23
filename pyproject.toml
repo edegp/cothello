@@ -25,10 +25,8 @@ generate-setup-file = true
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
 numpy = "~=1.26.0"
-matplotlib = "*"
 pybind11 = ">=1.2.0"
 cython = "*"
-ipython = "*"
 
 [tool.poetry.group.dev.dependencies]
 pyproject-flake8 = "^6.0.0"
