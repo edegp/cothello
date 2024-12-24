@@ -9,7 +9,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "othello"
-version = "2.3.3"
+version = "2.3.4"
 description = "C++ othello environment using bitboard."
 authors = ["Tatsuya Yatagawa <tatsy.mail@gmail.com>"]
 readme = "README.md"
@@ -23,7 +23,7 @@ script = "build_exts.py"
 generate-setup-file = true
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.10,<3.14"
 numpy = "~=1.26.0"
 pybind11 = ">=1.2.0"
 cython = "*"
